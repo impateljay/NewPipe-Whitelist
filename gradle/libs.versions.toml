@@ -15,7 +15,9 @@ core-ktx = "1.12.0"
 desugar-jdk-libs-nio = "2.0.4"
 documentFile = "1.0.1"
 exoplayer = "2.18.7"
+firebaseBom = "33.16.0"
 fragment-compose = "1.8.2"
+googleServices = "4.4.3"
 gradle = "8.7.1"
 groupie = "2.10.1"
 hilt = "2.51.1"
@@ -66,6 +68,7 @@ work = "2.10.0"
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin" }
 android-application = { id = "com.android.application" }
 checkstyle = { id = "checkstyle" }
+google-services = { id = "com.google.gms.google-services" }
 hilt = { id = "com.google.dagger.hilt.android" }
 kotlin-android = { id = "kotlin-android" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
@@ -128,6 +131,10 @@ exoplayer-hls = { group = "com.google.android.exoplayer", name = "exoplayer-hls"
 exoplayer-smoothstreaming = { group = "com.google.android.exoplayer", name = "exoplayer-smoothstreaming", version.ref = "exoplayer" }
 exoplayer-ui = { group = "com.google.android.exoplayer", name = "exoplayer-ui", version.ref = "exoplayer" }
 extension-mediasession = { group = "com.google.android.exoplayer", name = "extension-mediasession", version.ref = "exoplayer" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-config = { module = "com.google.firebase:firebase-config" }
+google-services = { module = "com.google.gms:google-services", version.ref = "googleServices" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }

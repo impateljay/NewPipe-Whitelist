@@ -232,9 +232,9 @@ public class ChooseTabsFragment extends Fragment {
                     }
                     break;
                 case KIOSK:
-                    returnList.add(new ChooseTabListItem(tab.getTabId(),
-                            getString(R.string.kiosk_page_summary),
-                            R.drawable.ic_whatshot));
+//                    returnList.add(new ChooseTabListItem(tab.getTabId(),
+//                            getString(R.string.kiosk_page_summary),
+//                            R.drawable.ic_whatshot));
                     break;
                 case CHANNEL:
                     returnList.add(new ChooseTabListItem(tab.getTabId(),
@@ -242,11 +242,11 @@ public class ChooseTabsFragment extends Fragment {
                             tab.getTabIconRes(context)));
                     break;
                 case DEFAULT_KIOSK:
-                    if (!tabList.contains(tab)) {
-                        returnList.add(new ChooseTabListItem(tab.getTabId(),
-                                getString(R.string.default_kiosk_page_summary),
-                                R.drawable.ic_whatshot));
-                    }
+//                    if (!tabList.contains(tab)) {
+//                        returnList.add(new ChooseTabListItem(tab.getTabId(),
+//                                getString(R.string.default_kiosk_page_summary),
+//                                R.drawable.ic_whatshot));
+//                    }
                     break;
                 case PLAYLIST:
                     returnList.add(new ChooseTabListItem(tab.getTabId(),

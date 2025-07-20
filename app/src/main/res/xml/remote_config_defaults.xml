@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>whitelist_channel_ids</key>
+        <value>{"whitelist_channel_ids":[{"channel_name":"Rajkot Gurukul","channel_id":"UC68cRIavgzhwjZ1GliadsIw"},{"channel_name":"Swaminarayan","channel_id":"UC7HQ3mzdsyvLU0Y7a2t3N7A"},{"channel_name":"Swaminarayan Bhagwan","channel_id":"UCQXWP4gEdEwlb6vodwrU75A"},{"channel_name":"Sardhar Katha","channel_id":"UCQhp381aq84txyUYNJ-1sDw"},{"channel_name":"VADTAL MANDIR","channel_id":"UC2oaqitUiwcbYPnh9zLR50g"},{"channel_name":"Surat Gurukul","channel_id":"UC6Mq8k0iG3L-ouRqhgMkWKw"},{"channel_name":"TED","channel_id":"UCAuUUnT6oDeKwE6v1NGQxug"}]}</value>
+    </entry>
+</defaultsMap>

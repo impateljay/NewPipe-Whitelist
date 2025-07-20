@@ -14,6 +14,7 @@ plugins {
     alias libs.plugins.sonarqube
     alias libs.plugins.hilt
     alias libs.plugins.aboutlibraries
+    alias libs.plugins.google.services
 }
 
 android {
@@ -342,6 +343,10 @@ dependencies {
     androidTestImplementation libs.androidx.runner
     androidTestImplementation libs.androidx.room.testing
     androidTestImplementation libs.assertj.core
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.config)
 }
 
 static String getGitWorkingBranch() {

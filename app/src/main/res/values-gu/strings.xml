@@ -72,7 +72,7 @@
     <string name="ok">ઠીક છે</string>
     <string name="yes">હા</string>
     <string name="no">ના</string>
-    <string name="trending">વલણમાંનાં</string>
+<!--    <string name="trending">વલણમાંનાં</string>-->
     <string name="auto_queue_toggle">આપોઆપ કતારબદ્ધતા</string>
     <string name="crash_the_player">પ્લેયરને ક્રેશ કરો</string>
     <string name="action_history">ઇતિહાસ</string>

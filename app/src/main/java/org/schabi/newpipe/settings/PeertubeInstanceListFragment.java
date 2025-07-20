@@ -36,7 +36,6 @@ import org.schabi.newpipe.databinding.ItemInstanceBinding;
 import org.schabi.newpipe.extractor.services.peertube.PeertubeInstance;
 import org.schabi.newpipe.util.Constants;
 import org.schabi.newpipe.util.PeertubeHelper;
-import org.schabi.newpipe.util.ThemeHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -100,8 +99,8 @@ public class PeertubeInstanceListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        ThemeHelper.setTitleToAppCompatActivity(getActivity(),
-                getString(R.string.peertube_instance_url_title));
+//        ThemeHelper.setTitleToAppCompatActivity(getActivity(),
+//                getString(R.string.peertube_instance_url_title));
     }
 
     @Override

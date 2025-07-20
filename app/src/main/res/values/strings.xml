@@ -139,7 +139,7 @@
     <string name="unsupported_url_dialog_message">Could not recognize the URL. Open with another app?</string>
     <string name="default_content_country_title">Default content country</string>
     <string name="content_language_title">Default content language</string>
-    <string name="peertube_instance_url_title">PeerTube instances</string>
+<!--    <string name="peertube_instance_url_title">PeerTube instances</string>-->
     <string name="peertube_instance_url_summary">Select your favorite PeerTube instances</string>
     <string name="peertube_instance_url_help">Find the instances you like on %s</string>
     <string name="peertube_instance_add_title">Add instance</string>
@@ -415,7 +415,7 @@
     <string name="select_a_feed_group">Select a feed group</string>
     <string name="no_feed_group_created_yet">No feed group created yet</string>
     <!-- Kiosk Names -->
-    <string name="trending">Trending</string>
+<!--    <string name="trending">Trending</string>-->
     <string name="top_50">Top 50</string>
     <string name="new_and_hot">New and hot</string>
     <string name="local">Local</string>

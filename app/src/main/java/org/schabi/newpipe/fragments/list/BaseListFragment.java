@@ -2,6 +2,7 @@ package org.schabi.newpipe.fragments.list;
 
 import static org.schabi.newpipe.ktx.ViewUtils.animate;
 import static org.schabi.newpipe.ktx.ViewUtils.animateHideRecyclerViewAllowingScrolling;
+import static org.schabi.newpipe.util.UtilKt.isStreamAllowed;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -374,10 +375,12 @@ public abstract class BaseListFragment<I, N> extends BaseStateFragment<I>
     }
 
     private void onStreamSelected(final StreamInfoItem selectedItem) {
-        onItemSelected(selectedItem);
-        NavigationHelper.openVideoDetailFragment(requireContext(), getFM(),
-                selectedItem.getServiceId(), selectedItem.getUrl(), selectedItem.getName(),
-                null, false);
+        if (isStreamAllowed(getContext(), selectedItem.getUploaderUrl())) {
+            onItemSelected(selectedItem);
+            NavigationHelper.openVideoDetailFragment(requireContext(), getFM(),
+                    selectedItem.getServiceId(), selectedItem.getUrl(),
+                    selectedItem.getName(), null, false);
+        }
     }
 
     protected void onScrollToBottom() {
@@ -388,7 +391,9 @@ public abstract class BaseListFragment<I, N> extends BaseStateFragment<I>
 
     protected void showInfoItemDialog(final StreamInfoItem item) {
         try {
-            new InfoItemDialog.Builder(getActivity(), getContext(), this, item).create().show();
+            if (isStreamAllowed(getContext(), item.getUploaderUrl())) {
+                new InfoItemDialog.Builder(getActivity(), getContext(), this, item).create().show();
+            }
         } catch (final IllegalArgumentException e) {
             InfoItemDialog.Builder.reportErrorDuringInitialization(e, item);
         }

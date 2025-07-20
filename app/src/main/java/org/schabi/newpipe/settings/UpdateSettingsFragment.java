@@ -3,12 +3,10 @@ package org.schabi.newpipe.settings;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 
-import org.schabi.newpipe.NewVersionWorker;
 import org.schabi.newpipe.R;
 
 public class UpdateSettingsFragment extends BasePreferenceFragment {
@@ -18,15 +16,15 @@ public class UpdateSettingsFragment extends BasePreferenceFragment {
                 .putBoolean(getString(R.string.update_app_key), checkForUpdates)
                 .apply();
 
-        if (checkForUpdates) {
-            NewVersionWorker.enqueueNewVersionCheckingWork(requireContext(), true);
-        }
+//        if (checkForUpdates) {
+//            NewVersionWorker.enqueueNewVersionCheckingWork(requireContext(), true);
+//        }
         return true;
     };
 
     private final Preference.OnPreferenceClickListener manualUpdateClick = preference -> {
-        Toast.makeText(getContext(), R.string.checking_updates_toast, Toast.LENGTH_SHORT).show();
-        NewVersionWorker.enqueueNewVersionCheckingWork(requireContext(), true);
+//        Toast.makeText(getContext(), R.string.checking_updates_toast, Toast.LENGTH_SHORT).show();
+//        NewVersionWorker.enqueueNewVersionCheckingWork(requireContext(), true);
         return true;
     };
 

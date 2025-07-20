@@ -59,6 +59,7 @@ import org.schabi.newpipe.util.OnClickGesture
 import org.schabi.newpipe.util.ServiceHelper
 import org.schabi.newpipe.util.ThemeHelper.getGridSpanCountChannels
 import org.schabi.newpipe.util.external_communication.ShareUtils
+import org.schabi.newpipe.util.isStreamAllowed
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -329,31 +330,38 @@ class SubscriptionFragment : BaseStateFragment<SubscriptionState>() {
     }
 
     private fun showLongTapDialog(selectedItem: ChannelInfoItem) {
-        val commands = arrayOf(
-            getString(R.string.share),
-            getString(R.string.open_in_browser),
-            getString(R.string.unsubscribe)
-        )
+        if (isStreamAllowed(context, selectedItem.url)) {
+            val commands = arrayOf(
+                getString(R.string.share),
+                getString(R.string.open_in_browser),
+                getString(R.string.unsubscribe)
+            )
 
-        val actions = DialogInterface.OnClickListener { _, i ->
-            when (i) {
-                0 -> ShareUtils.shareText(
-                    requireContext(), selectedItem.name, selectedItem.url, selectedItem.thumbnails
-                )
-                1 -> ShareUtils.openUrlInBrowser(requireContext(), selectedItem.url)
-                2 -> deleteChannel(selectedItem)
+            val actions = DialogInterface.OnClickListener { _, i ->
+                when (i) {
+                    0 -> ShareUtils.shareText(
+                        requireContext(),
+                        selectedItem.name,
+                        selectedItem.url,
+                        selectedItem.thumbnails
+                    )
+
+                    1 -> ShareUtils.openUrlInBrowser(requireContext(), selectedItem.url)
+                    2 -> deleteChannel(selectedItem)
+                }
             }
+
+            val dialogTitleBinding =
+                DialogTitleBinding.inflate(LayoutInflater.from(requireContext()))
+            dialogTitleBinding.root.isSelected = true
+            dialogTitleBinding.itemTitleView.text = selectedItem.name
+            dialogTitleBinding.itemAdditionalDetails.visibility = View.GONE
+
+            AlertDialog.Builder(requireContext())
+                .setCustomTitle(dialogTitleBinding.root)
+                .setItems(commands, actions)
+                .show()
         }
-
-        val dialogTitleBinding = DialogTitleBinding.inflate(LayoutInflater.from(requireContext()))
-        dialogTitleBinding.root.isSelected = true
-        dialogTitleBinding.itemTitleView.text = selectedItem.name
-        dialogTitleBinding.itemAdditionalDetails.visibility = View.GONE
-
-        AlertDialog.Builder(requireContext())
-            .setCustomTitle(dialogTitleBinding.root)
-            .setItems(commands, actions)
-            .show()
     }
 
     private fun deleteChannel(selectedItem: ChannelInfoItem) {

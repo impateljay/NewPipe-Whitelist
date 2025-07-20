@@ -56,6 +56,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.preference.PreferenceManager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.firebase.remoteconfig.ConfigUpdate;
+import com.google.firebase.remoteconfig.ConfigUpdateListener;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigException;
 
 import org.schabi.newpipe.databinding.ActivityMainBinding;
 import org.schabi.newpipe.databinding.DrawerHeaderBinding;
@@ -79,7 +83,6 @@ import org.schabi.newpipe.player.playqueue.PlayQueue;
 import org.schabi.newpipe.settings.UpdateSettingsFragment;
 import org.schabi.newpipe.util.Constants;
 import org.schabi.newpipe.util.DeviceUtils;
-import org.schabi.newpipe.util.KioskTranslator;
 import org.schabi.newpipe.util.Localization;
 import org.schabi.newpipe.util.NavigationHelper;
 import org.schabi.newpipe.util.PeertubeHelper;
@@ -95,6 +98,7 @@ import org.schabi.newpipe.views.FocusOverlayView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -195,20 +199,20 @@ public class MainActivity extends AppCompatActivity {
         Localization.migrateAppLanguageSettingIfNecessary(getApplicationContext());
     }
 
-    @Override
-    protected void onPostCreate(final Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        final App app = App.getInstance();
-
-        if (sharedPreferences.getBoolean(app.getString(R.string.update_app_key), false)
-                && sharedPreferences
-                .getBoolean(app.getString(R.string.update_check_consent_key), false)) {
-            // Start the worker which is checking all conditions
-            // and eventually searching for a new version.
-            NewVersionWorker.enqueueNewVersionCheckingWork(app, false);
-        }
-    }
+//    @Override
+//    protected void onPostCreate(final Bundle savedInstanceState) {
+//        super.onPostCreate(savedInstanceState);
+//
+//        final App app = App.getInstance();
+//
+//        if (sharedPreferences.getBoolean(app.getString(R.string.update_app_key), false)
+//                && sharedPreferences
+//                .getBoolean(app.getString(R.string.update_check_consent_key), false)) {
+//            // Start the worker which is checking all conditions
+//            // and eventually searching for a new version.
+//            NewVersionWorker.enqueueNewVersionCheckingWork(app, false);
+//        }
+//    }
 
     @Override
     protected void onStart() {
@@ -260,18 +264,18 @@ public class MainActivity extends AppCompatActivity {
      */
     private void addDrawerMenuForCurrentService() throws ExtractionException {
         //Tabs
-        final int currentServiceId = ServiceHelper.getSelectedServiceId(this);
-        final StreamingService service = NewPipe.getService(currentServiceId);
+//        final int currentServiceId = ServiceHelper.getSelectedServiceId(this);
+//        final StreamingService service = NewPipe.getService(currentServiceId);
 
-        int kioskMenuItemId = 0;
+//        int kioskMenuItemId = 0;
 
-        for (final String ks : service.getKioskList().getAvailableKiosks()) {
-            drawerLayoutBinding.navigation.getMenu()
-                    .add(R.id.menu_tabs_group, kioskMenuItemId, 0, KioskTranslator
-                            .getTranslatedKioskName(ks, this))
-                    .setIcon(KioskTranslator.getKioskIcon(ks));
-            kioskMenuItemId++;
-        }
+//        for (final String ks : service.getKioskList().getAvailableKiosks()) {
+//            drawerLayoutBinding.navigation.getMenu()
+//                    .add(R.id.menu_tabs_group, kioskMenuItemId, 0, KioskTranslator
+//                            .getTranslatedKioskName(ks, this))
+//                    .setIcon(KioskTranslator.getKioskIcon(ks));
+//            kioskMenuItemId++;
+//        }
 
         drawerLayoutBinding.navigation.getMenu()
                 .add(R.id.menu_tabs_group, ITEM_ID_SUBSCRIPTIONS, ORDER,
@@ -294,13 +298,13 @@ public class MainActivity extends AppCompatActivity {
         drawerLayoutBinding.navigation.getMenu()
                 .add(R.id.menu_options_about_group, ITEM_ID_SETTINGS, ORDER, R.string.settings)
                 .setIcon(R.drawable.ic_settings);
-        drawerLayoutBinding.navigation.getMenu()
-                .add(R.id.menu_options_about_group, ITEM_ID_DONATION, ORDER,
-                        R.string.donation_title)
-                .setIcon(R.drawable.volunteer_activism_ic);
-        drawerLayoutBinding.navigation.getMenu()
-                .add(R.id.menu_options_about_group, ITEM_ID_ABOUT, ORDER, R.string.tab_about)
-                .setIcon(R.drawable.ic_info_outline);
+//        drawerLayoutBinding.navigation.getMenu()
+//                .add(R.id.menu_options_about_group, ITEM_ID_DONATION, ORDER,
+//                        R.string.donation_title)
+//                .setIcon(R.drawable.volunteer_activism_ic);
+//        drawerLayoutBinding.navigation.getMenu()
+//                .add(R.id.menu_options_about_group, ITEM_ID_ABOUT, ORDER, R.string.tab_about)
+//                .setIcon(R.drawable.ic_info_outline);
     }
 
     private boolean drawerItemSelected(final MenuItem item) {
@@ -383,7 +387,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupDrawerHeader() {
-        drawerHeaderBinding.drawerHeaderActionButton.setOnClickListener(view -> toggleServices());
+//        drawerHeaderBinding.drawerHeaderActionButton.setOnClickListener(view -> toggleServices());
 
         // If the current app name is bigger than the default "NewPipe" (7 chars),
         // let the text view grow a little more as well.
@@ -408,8 +412,8 @@ public class MainActivity extends AppCompatActivity {
         drawerLayoutBinding.navigation.getMenu().removeGroup(R.id.menu_options_about_group);
 
         // Show up or down arrow
-        drawerHeaderBinding.drawerArrow.setImageResource(
-                servicesShown ? R.drawable.ic_arrow_drop_up : R.drawable.ic_arrow_drop_down);
+//        drawerHeaderBinding.drawerArrow.setImageResource(
+//                servicesShown ? R.drawable.ic_arrow_drop_up : R.drawable.ic_arrow_drop_down);
 
         if (servicesShown) {
             showServices();
@@ -503,6 +507,42 @@ public class MainActivity extends AppCompatActivity {
         Localization.initPrettyTime(Localization.resolvePrettyTime(getApplicationContext()));
         super.onResume();
 
+        final FirebaseRemoteConfig mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        mFirebaseRemoteConfig.addOnConfigUpdateListener(new ConfigUpdateListener() {
+            @Override
+            public void onUpdate(@NonNull final ConfigUpdate configUpdate) {
+                Log.d(TAG, "Updated keys: " + configUpdate.getUpdatedKeys());
+                mFirebaseRemoteConfig.activate().addOnCompleteListener(task -> {
+//                        displayWelcomeMessage();
+                });
+            }
+            @Override
+            public void onError(@NonNull final FirebaseRemoteConfigException error) {
+                Log.w(TAG, "Config update error with code: " + error.getCode(), error);
+            }
+        });
+        mFirebaseRemoteConfig.addOnConfigUpdateListener(new ConfigUpdateListener() {
+            @Override
+            public void onUpdate(@NonNull final ConfigUpdate configUpdate) {
+                Log.d("TAG", "Updated keys: " + configUpdate.getUpdatedKeys());
+                FirebaseRemoteConfig.getInstance().activate().addOnCompleteListener(task -> {
+                    final Set<String> updatedData = configUpdate.getUpdatedKeys();
+                    for (final String s : updatedData) {
+                        System.out.println(s);
+                        final String whitelistChannelIds = FirebaseRemoteConfig.getInstance()
+                                .getString(s);
+                        Log.d(TAG, "onUpdate: " + whitelistChannelIds);
+                        addChannelToWhitelist(whitelistChannelIds);
+                    }
+                });
+            }
+
+            @Override
+            public void onError(@NonNull final FirebaseRemoteConfigException error) {
+                Log.w("TAG", "Config update error with code: " + error.getCode(), error);
+            }
+        });
+
         // Close drawer on return, and don't show animation,
         // so it looks like the drawer isn't open when the user returns to MainActivity
         mainBinding.getRoot().closeDrawer(GravityCompat.START, false);
@@ -510,12 +550,12 @@ public class MainActivity extends AppCompatActivity {
             final int selectedServiceId = ServiceHelper.getSelectedServiceId(this);
             final String selectedServiceName = NewPipe.getService(selectedServiceId)
                     .getServiceInfo().getName();
-            drawerHeaderBinding.drawerHeaderServiceView.setText(selectedServiceName);
-            drawerHeaderBinding.drawerHeaderServiceIcon.setImageResource(ServiceHelper
-                    .getIcon(selectedServiceId));
+//            drawerHeaderBinding.drawerHeaderServiceView.setText(selectedServiceName);
+//            drawerHeaderBinding.drawerHeaderServiceIcon.setImageResource(ServiceHelper
+//                    .getIcon(selectedServiceId));
 
-            drawerHeaderBinding.drawerHeaderServiceView.post(() -> drawerHeaderBinding
-                    .drawerHeaderServiceView.setSelected(true));
+//            drawerHeaderBinding.drawerHeaderServiceView.post(() -> drawerHeaderBinding
+//                    .drawerHeaderServiceView.setSelected(true));
             drawerHeaderBinding.drawerHeaderActionButton.setContentDescription(
                     getString(R.string.drawer_header_description) + selectedServiceName);
         } catch (final Exception e) {
@@ -542,6 +582,13 @@ public class MainActivity extends AppCompatActivity {
                 getString(R.string.enable_watch_history_key), true);
         drawerLayoutBinding.navigation.getMenu().findItem(ITEM_ID_HISTORY)
                 .setVisible(isHistoryEnabled);
+    }
+
+    private void addChannelToWhitelist(final String whitelistChannelIds) {
+        final SharedPreferences defaultSharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        defaultSharedPreferences.edit()
+                .putString("whitelist_channel_ids", whitelistChannelIds).apply();
     }
 
     @Override

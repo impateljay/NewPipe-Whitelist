@@ -30,8 +30,8 @@ public final class KioskTranslator {
 
     public static String getTranslatedKioskName(final String kioskId, final Context c) {
         switch (kioskId) {
-            case "Trending":
-                return c.getString(R.string.trending);
+//            case "Trending":
+//                return c.getString(R.string.trending);
             case "Top 50":
                 return c.getString(R.string.top_50);
             case "New & hot":
@@ -59,11 +59,11 @@ public final class KioskTranslator {
 
     public static int getKioskIcon(final String kioskId) {
         switch (kioskId) {
-            case "Trending":
-            case "Top 50":
-            case "New & hot":
-            case "conferences":
-                return R.drawable.ic_whatshot;
+//            case "Trending":
+//            case "Top 50":
+//            case "New & hot":
+//            case "conferences":
+//                return R.drawable.ic_whatshot;
             case "Local":
                 return R.drawable.ic_home;
             case "Recently added":

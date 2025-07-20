@@ -82,6 +82,7 @@ import org.schabi.newpipe.util.ThemeHelper.getGridSpanCountStreams
 import org.schabi.newpipe.util.ThemeHelper.getItemViewMode
 import org.schabi.newpipe.util.ThemeHelper.resolveDrawable
 import org.schabi.newpipe.util.ThemeHelper.shouldUseGridLayout
+import org.schabi.newpipe.util.isStreamAllowed
 import java.time.OffsetDateTime
 import java.util.function.Consumer
 
@@ -391,17 +392,24 @@ class FeedFragment : BaseStateFragment<FeedState>() {
         override fun onItemClick(item: Item<*>, view: View) {
             if (item is StreamItem && !isRefreshing) {
                 val stream = item.streamWithState.stream
-                NavigationHelper.openVideoDetailFragment(
-                    requireContext(), fm,
-                    stream.serviceId, stream.url, stream.title, null, false
-                )
+                if (isStreamAllowed(context, stream.toStreamInfoItem().uploaderUrl)) {
+                    NavigationHelper.openVideoDetailFragment(
+                        requireContext(), fm,
+                        stream.serviceId, stream.url, stream.title, null, false
+                    )
+                }
             }
         }
 
         override fun onItemLongClick(item: Item<*>, view: View): Boolean {
             if (item is StreamItem && !isRefreshing) {
-                showInfoItemDialog(item.streamWithState.stream.toStreamInfoItem())
-                return true
+                val streamInfo = item.streamWithState.stream.toStreamInfoItem()
+                context?.let {
+                    if (isStreamAllowed(it, streamInfo.uploaderUrl)) {
+                        showInfoItemDialog(streamInfo)
+                        return true
+                    }
+                }
             }
             return false
         }

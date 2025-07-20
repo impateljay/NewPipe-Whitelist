@@ -1,5 +1,7 @@
 package org.schabi.newpipe.fragments.list.channel;
 
+import static org.schabi.newpipe.util.UtilKt.isStreamAllowed;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -150,17 +152,23 @@ public class ChannelTabFragment extends BaseListInfoFragment<InfoItem, ChannelTa
             }
         }
 
-        if (playlistControlBinding != null) {
-            // PlaylistControls should be visible only if there is some item in
-            // infoListAdapter other than header
-            if (infoListAdapter.getItemCount() > 1) {
-                playlistControlBinding.getRoot().setVisibility(View.VISIBLE);
-            } else {
+        if (isStreamAllowed(getContext(), result.getId())) {
+            if (playlistControlBinding != null) {
+                // PlaylistControls should be visible only if there is some item in
+                // infoListAdapter other than header
+                if (infoListAdapter.getItemCount() > 1) {
+                    playlistControlBinding.getRoot().setVisibility(View.VISIBLE);
+                } else {
+                    playlistControlBinding.getRoot().setVisibility(View.GONE);
+                }
+
+                PlayButtonHelper.initPlaylistControlClickListener(
+                        activity, playlistControlBinding, this);
+            }
+        } else {
+            if (playlistControlBinding != null) {
                 playlistControlBinding.getRoot().setVisibility(View.GONE);
             }
-
-            PlayButtonHelper.initPlaylistControlClickListener(
-                    activity, playlistControlBinding, this);
         }
     }
 

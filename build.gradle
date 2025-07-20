@@ -12,7 +12,7 @@ buildscript {
         classpath libs.hilt.android.gradle.plugin
         classpath libs.aboutlibraries.plugin
         classpath libs.kotlinx.serialization
-
+        classpath libs.google.services // Or use the version catalog: classpath(libs.plugins.google.services.get().pluginId) if you have a library entry for the classpath itself, which is different from the plugin alias.
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
